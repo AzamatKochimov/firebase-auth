@@ -121,6 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: TextFormField(
                           controller: passwordController,
                           validator: validatePassword,
+                          obscureText: true,
                           decoration: const InputDecoration(
                             contentPadding:
                                 EdgeInsets.symmetric(horizontal: 10),
@@ -136,6 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: TextFormField(
                     controller: confirmPasswordController,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       hintText: "Confirm Password",

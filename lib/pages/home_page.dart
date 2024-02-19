@@ -1,15 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
 import '../utils/k_colors.dart';
 import 'login_page.dart';
-import 'register_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  var user = User;
+  HomePage({super.key,  user});
 
   @override
   Widget build(BuildContext context) {
+    // final currentUser = FirebaseAuth.instance;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -34,6 +37,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         width: double.infinity,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               padding: const EdgeInsets.only(top: 30),
@@ -61,6 +65,30 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              "Hi ${user}",
+              style: TextStyle(
+                  fontSize: 18,
+                  color: MyColors.mainColor,
+                  fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              "Congrats!\nYour account with Coach Time has\nbeen successfully created.",
+              style: TextStyle(
+                  fontSize: 18,
+                  color: MyColors.mainColor,
+                  fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              "User Name:\nUser Email:\nPassword:\n ",
+              style: TextStyle(
+                  fontSize: 18,
+                  color: MyColors.mainColor,
+                  fontWeight: FontWeight.w400),
             ),
           ],
         ),

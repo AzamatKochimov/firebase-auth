@@ -17,10 +17,11 @@ class AuthService {
 
       if (userCredential.user != null) {
         await userCredential.user!.updateDisplayName(fullName);
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (ctx) => const HomePage(),
+            builder: (ctx) => HomePage(user: userCredential,),
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(
@@ -42,6 +43,7 @@ class AuthService {
           });
       return null;
     }
+    return null;
   }
 
   static Future<User?> loginUser(
@@ -58,10 +60,6 @@ class AuthService {
         return null;
       }
     } catch (e) {
-      Future.delayed(Duration.zero).then((value) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
-      });
       return null;
     }
   }

@@ -3,7 +3,6 @@ import 'package:auth_firebase/utils/k_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
-import 'home_page.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  bool isValidateUser = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,8 @@ class _LoginPageState extends State<LoginPage> {
                         color: MyColors.mainColor,
                       ),
                       textAlign: TextAlign.center,
-                    )
+                    ),
+                    isValidateUser ? Text('Invalid User!', style: TextStyle(color: MyColors.red, fontWeight: FontWeight.w500)) : const SizedBox.shrink(),
                   ],
                 ),
                 Column(
@@ -85,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: TextFormField(
                         controller: passwordController,
+                        obscureText: true,
                         validator: validatePassword,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -110,14 +113,17 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialButton(
                       onPressed: () async {
                         if (_key.currentState!.validate()) {
-                          await AuthService.loginUser(context,
+                          var user = await AuthService.loginUser(context,
                               email: emailController.text,
                               password: passwordController.text);
-                          // ignore: use_build_context_synchronously
+                          if (user == null) {
+                            isValidateUser = true;
+                          }else{
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const UserDetails()));
+                          }
                           setState(() {});
                         }
                       },
@@ -180,7 +186,8 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialButton(
                       color: MyColors.mainColor,
                       onPressed: () {},
-                      padding: const EdgeInsets.symmetric(horizontal: 12,vertical:8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: Row(
