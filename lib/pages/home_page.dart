@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
+import '../utils/k_colors.dart';
 import 'login_page.dart';
 import 'register_page.dart';
 
@@ -11,34 +12,56 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Home Page"),
         actions: [
           IconButton(
             onPressed: () async {
               await AuthService.logOut();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()));
+              // ignore: use_build_context_synchronously
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                ),
+              );
             },
             icon: const Icon(Icons.logout),
           )
         ],
       ),
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        width: double.infinity,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Home Page",
-              style: TextStyle(fontSize: 26),
+            Container(
+              padding: const EdgeInsets.only(top: 30),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: MyColors.mainColor,
+                    foregroundColor: MyColors.whiteColor,
+                    child: const Text(
+                      "C",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    "Coach Time",
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: MyColors.mainColor,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ],
+              ),
             ),
-            IconButton(
-                onPressed: () async {
-                  await AuthService.deleteAccount();
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegisterPage()));
-                },
-                icon: const Icon(Icons.delete))
           ],
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:auth_firebase/pages/user_details_screen.dart';
 import 'package:auth_firebase/utils/k_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -112,10 +113,11 @@ class _LoginPageState extends State<LoginPage> {
                           await AuthService.loginUser(context,
                               email: emailController.text,
                               password: passwordController.text);
+                          // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
+                                  builder: (context) => const UserDetails()));
                           setState(() {});
                         }
                       },
@@ -150,6 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     MaterialButton(
                       onPressed: () {},
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 1,
@@ -176,6 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialButton(
                       color: MyColors.mainColor,
                       onPressed: () {},
+                      padding: const EdgeInsets.symmetric(horizontal: 12,vertical:8),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       child: Row(
@@ -275,16 +280,6 @@ class _LoginPageState extends State<LoginPage> {
   String? validatePassword(String? formPassword) {
     if (formPassword == null || formPassword.isEmpty) {
       return 'Password is required.';
-    }
-
-    String pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(formPassword)) {
-      return '''
-      Password must be at least 8 characters,
-      include an uppercase letter, number and symbol.
-      ''';
     }
 
     return null;

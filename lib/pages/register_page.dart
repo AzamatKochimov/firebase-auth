@@ -5,6 +5,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../services/auth_service.dart';
 import '../utils/k_colors.dart';
+import 'user_details_screen.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -177,6 +178,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           fullName: fullNameController.text.trim().toString(),
                           email: emailController.text.trim().toString(),
                           password: passwordController.text);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const UserDetails(),
+                        ),
+                      );
                       setState(() {});
                     }
                   },
@@ -193,7 +201,34 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Need help? Visit our ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: MyColors.mainColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          "help center",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.mainColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -226,15 +261,15 @@ class _RegisterPageState extends State<RegisterPage> {
       return 'Password is required.';
     }
 
-    String pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-    RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(formPassword)) {
-      return '''
-      Password must be at least 8 characters,
-      include an uppercase letter, number and symbol.
-      ''';
-    }
+    // String pattern =
+    //     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    // RegExp regex = RegExp(pattern);
+    // if (!regex.hasMatch(formPassword)) {
+    //   return '''
+    //   Password must be at least 8 characters,
+    //   include an uppercase letter, number and symbol.
+    //   ''';
+    // }
 
     return null;
   }
